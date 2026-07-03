@@ -1,5 +1,5 @@
 {
-  "updated_at": 1783108779,
+  "updated_at": 1783109685,
   "start": 1783040400,
   "end": 1783126800,
   "interval_sec": 900,
@@ -10,8 +10,8 @@
     "symbol": "MAME",
     "name": "Mame Inu",
     "address": "0xe92f7fe3eaf61df28b7b75f3faab199333c42302",
-    "price": 0.0081775575,
-    "market_cap": 8177557.5
+    "price": 0.0081887036,
+    "market_cap": 8188703.6
   },
   "ranking": [
     {
