@@ -139,13 +139,8 @@ $('#caShort').textContent = short(CA);
 
 let DATA=null;
 function dataUrl(){
- const h=location.hostname;
- if(h.endsWith('github.io')){
-   const user=h.split('.')[0];
-   const repo=(location.pathname.split('/').filter(Boolean)[0])||'';
-   if(repo) return `https://raw.githubusercontent.com/${user}/${repo}/main/data.json`;
- }
- return 'data.json';
+ // 固定从 GitHub raw 读取，保证 github.io 与 netlify 代理都拿同一份最新数据
+ return 'https://raw.githubusercontent.com/sansu668/MAME/main/data.json';
 }
 async function load(){
  try{const r=await fetch(dataUrl()+'?t='+Date.now(),{cache:'no-store'});DATA=await r.json();}
