@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAME · 净买入 BNB 排行榜</title>
+<meta name="description" content="MAME (Mame Inu) 净买入 BNB 排行榜 · Net BNB Buy Race">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --gold:#F3BA2F; --gold2:#ffd764; --bg:#080a12; --bg2:#0e1220;
+ --card:rgba(20,26,42,.72); --line:#232c44; --txt:#eaf0ff; --mut:#8b97b5;
+ --pos:#39d98a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--txt);
+ background:radial-gradient(1100px 620px at 50% -8%,#16203c 0%,var(--bg2) 42%,var(--bg) 100%);
+ min-height:100vh;overflow-x:hidden}
+/* 星空 */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;
+ background-image:radial-gradient(1.4px 1.4px at 20% 30%,#fff6 40%,transparent),
+  radial-gradient(1.2px 1.2px at 70% 60%,#fff5 40%,transparent),
+  radial-gradient(1px 1px at 40% 80%,#fff4 40%,transparent),
+  radial-gradient(1.6px 1.6px at 85% 20%,#ffe9a640 40%,transparent),
+  radial-gradient(1px 1px at 55% 15%,#fff4 40%,transparent);
+ background-size:cover;opacity:.7}
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:26px 18px 60px}
+h1,h2,h3,.brand,.rank-num,.bignum{font-family:"Space Grotesk",Inter,sans-serif}
+
+header{text-align:center;padding:14px 0 6px}
+.logo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);
+ box-shadow:0 0 0 6px #f3ba2f22,0 10px 40px #f3ba2f2e;background:#111}
+.brand{font-size:30px;font-weight:700;margin:14px 0 2px;letter-spacing:.5px}
+.brand b{color:var(--gold)}
+.sub{color:var(--mut);font-size:14px;margin:0 0 14px}
+.chips{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#131a2e;border:1px solid var(--line);
+ border-radius:999px;padding:6px 13px;font-size:12.5px;color:#c6d0ea;text-decoration:none}
+.chip:hover{border-color:var(--gold)}
+.chip .k{color:var(--mut)}
+.copy{cursor:pointer;opacity:.6}.copy:hover{opacity:1}
+
+.statusbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;
+ margin:20px 0 8px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 18px;
+ backdrop-filter:blur(8px);text-align:center;min-width:120px}
+.pill .l{color:var(--mut);font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+.pill .v{font-size:19px;font-weight:700;margin-top:3px}
+.pill.live .v{color:var(--pos)} .pill.wait .v{color:var(--gold)} .pill.end .v{color:#ff7089}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--pos);display:inline-block;margin-right:6px;
+ box-shadow:0 0 0 0 #39d98a99;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #39d98a88}70%{box-shadow:0 0 0 10px #39d98a00}100%{box-shadow:0 0 0 0 #39d98a00}}
+
+.title2{text-align:center;font-size:15px;color:var(--mut);margin:24px 0 14px}
+.title2 b{color:var(--txt)}
+
+/* 领奖台 */
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;align-items:end;margin-bottom:16px}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 12px;text-align:center;
+ backdrop-filter:blur(8px);position:relative;overflow:hidden}
+.pcard.g1{border-color:var(--gold);box-shadow:0 12px 40px #f3ba2f22}
+.pcard .medal{font-size:26px}
+.pcard.g1{transform:translateY(-10px)}
+.pav{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--line);margin:6px auto 4px;background:#111}
+.pcard.g1 .pav{border-color:var(--gold);width:60px;height:60px}
+.paddr{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#c6d0ea}
+.pbnb{font-size:20px;font-weight:700;color:var(--gold);margin-top:6px}
+.pcard.g1 .pbnb{font-size:24px}
+.pusd{font-size:11px;color:var(--mut)}
+
+/* 榜单 */
+.board{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;backdrop-filter:blur(8px)}
+.row{display:grid;grid-template-columns:46px 1fr 150px;gap:10px;align-items:center;
+ padding:13px 16px;border-top:1px solid #ffffff0d;position:relative}
+.row:first-child{border-top:none}
+.row .rank-num{font-size:16px;font-weight:700;color:var(--mut);text-align:center}
+.row .who{display:flex;flex-direction:column;gap:4px;min-width:0}
+.addr{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;color:#dbe4ff}
+.addr a{color:#9db6ff;text-decoration:none}
+.bar{height:6px;border-radius:6px;background:#ffffff12;overflow:hidden}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:6px}
+.amt{text-align:right}
+.amt .bnb{font-size:16px;font-weight:700;color:var(--gold)}
+.amt .usd{font-size:11px;color:var(--mut)}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:22px;line-height:1.7}
+.foot a{color:#9db6ff;text-decoration:none}
+.empty{text-align:center;color:var(--mut);padding:38px 10px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1f2b18;color:#bff0a8;
+ border:1px solid #2f5a2a;padding:9px 16px;border-radius:10px;z-index:9;display:none;font-size:13px}
+@media(max-width:640px){
+ .podium{grid-template-columns:1fr 1fr 1fr}.pcard.g1{transform:none}
+ .row{grid-template-columns:36px 1fr 110px}.brand{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+ <header>
+  <img class="logo" src="assets/mame.png" alt="MAME" onerror="this.style.display='none'">
+  <div class="brand"><b>MAME</b> · 净买入 BNB 排行榜</div>
+  <p class="sub">Mame Inu · The Last Shiba &nbsp;|&nbsp; Net&nbsp;BNB&nbsp;Buy&nbsp;Race</p>
+  <div class="chips">
+   <span class="chip" id="caChip" onclick="copyText(CA)"><span class="k">合约</span> <span id="caShort" class="addr"></span> <span class="copy">📋</span></span>
+   <a class="chip" href="https://x.com/mamebnb" target="_blank">𝕏 @mamebnb</a>
+   <a class="chip" href="https://mamebnb.com/" target="_blank">🌐 mamebnb.com</a>
+   <a class="chip" href="https://linktr.ee/mame" target="_blank">🔗 linktr.ee/mame</a>
+  </div>
+ </header>
+
+ <div class="statusbar" id="statusbar"></div>
+
+ <div class="title2">🏆 <b>净买入 BNB</b> 前十名 &nbsp;·&nbsp; 只统计活动窗口内净买入所花费的 BNB</div>
+ <div id="podium"></div>
+ <div id="board"></div>
+
+ <div class="foot" id="foot"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CA = "0xe92f7fe3eaf61df28b7b75f3faab199333c42302";
+let AVATARS = [];
+for(let i=0;i<10;i++)AVATARS.push('assets/'+i+'.png');
+const $=s=>document.querySelector(s);
+function short(a){return a?a.slice(0,6)+'…'+a.slice(-4):''}
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(window._t);window._t=setTimeout(()=>t.style.display='none',1400)}
+function copyText(a){navigator.clipboard.writeText(a).then(()=>toast('已复制')).catch(()=>{const t=document.createElement('textarea');t.value=a;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('已复制')})}
+function fmtBnb(v){return v==null?'—':(v>=100?v.toFixed(1):v.toFixed(3))}
+function fmtUsd(v){if(v==null)return '';const n=Math.abs(v);if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return '$'+(n/1e3).toFixed(1)+'K';return '$'+n.toFixed(0)}
+function bscscan(a){return 'https://bscscan.com/address/'+a}
+function hms(s){s=Math.max(0,Math.floor(s));const d=Math.floor(s/86400);const h=Math.floor(s%86400/3600);const m=Math.floor(s%3600/60);const ss=s%60;return (d>0?d+'天 ':'')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}
+function ago(s){s=Math.floor(s);if(s<60)return s+' 秒前';if(s<3600)return Math.floor(s/60)+' 分钟前';return Math.floor(s/3600)+' 小时前'}
+
+$('#caShort').textContent = short(CA);
+
+let DATA=null;
+function dataUrl(){
+ const h=location.hostname;
+ if(h.endsWith('github.io')){
+   const user=h.split('.')[0];
+   const repo=(location.pathname.split('/').filter(Boolean)[0])||'';
+   if(repo) return `https://raw.githubusercontent.com/${user}/${repo}/main/data.json`;
+ }
+ return 'data.json';
+}
+async function load(){
+ try{const r=await fetch(dataUrl()+'?t='+Date.now(),{cache:'no-store'});DATA=await r.json();}
+ catch(e){/* 首次可能没有 data.json */}
+ render();
+}
+function medal(i){return ['🥇','🥈','🥉'][i]||''}
+
+function render(){
+ const now=Date.now()/1000;
+ const d=DATA||{status:'waiting',start:0,end:0,ranking:[],bnb_price:null,interval_sec:900,token:{}};
+ // 状态栏
+ let sb='';
+ if(d.status==='waiting'){
+   sb+=`<div class="pill wait"><div class="l">状态</div><div class="v">未开始</div></div>`;
+   sb+=`<div class="pill"><div class="l">距开始</div><div class="v" id="cd">${hms((d.start||0)-now)}</div></div>`;
+ }else if(d.status==='ended'){
+   sb+=`<div class="pill end"><div class="l">状态</div><div class="v">已结束</div></div>`;
+   sb+=`<div class="pill"><div class="l">最终榜单</div><div class="v">FINAL</div></div>`;
+ }else{
+   sb+=`<div class="pill live"><div class="l">状态</div><div class="v"><span class="live-dot"></span>进行中</div></div>`;
+   sb+=`<div class="pill"><div class="l">距结束</div><div class="v" id="cd">${hms((d.end||0)-now)}</div></div>`;
+ }
+ sb+=`<div class="pill"><div class="l">BNB 价格</div><div class="v">${d.bnb_price?('$'+d.bnb_price.toFixed(1)):'—'}</div></div>`;
+ sb+=`<div class="pill"><div class="l">更新</div><div class="v" style="font-size:15px">${d.updated_at?ago(now-d.updated_at):'—'}</div></div>`;
+ $('#statusbar').innerHTML=sb;
+
+ const rk=d.ranking||[];
+ const top3=rk.slice(0,3), rest=rk.slice(3);
+ const maxb=rk.length?Math.max(...rk.map(x=>x.net_bnb||0),0.0001):1;
+ // 领奖台(顺序: 2 1 3)
+ if(top3.length){
+  const order=[top3[1],top3[0],top3[2]];
+  let ph='<div class="podium">';
+  order.forEach((r,idx)=>{
+    if(!r){ph+='<div></div>';return}
+    const cls=r.rank===1?'pcard g1':'pcard';
+    ph+=`<div class="${cls}"><div class="medal">${medal(r.rank-1)}</div>
+     <img class="pav" src="${AVATARS[r.rank-1]}" onerror="this.style.visibility='hidden'">
+     <div class="paddr"><a href="${bscscan(r.wallet)}" target="_blank" style="color:inherit;text-decoration:none">${short(r.wallet)}</a> <span class="copy" onclick="copyText('${r.wallet}')">📋</span></div>
+     <div class="pbnb">${fmtBnb(r.net_bnb)} <span style="font-size:.6em">BNB</span></div>
+     <div class="pusd">${fmtUsd(r.net_usd)}</div></div>`;
+  });
+  ph+='</div>';$('#podium').innerHTML=ph;
+ }else{$('#podium').innerHTML='';}
+ // 4-10
+ if(rest.length){
+  let bh='<div class="board">';
+  rest.forEach(r=>{const w=Math.max(3,(r.net_bnb||0)/maxb*100);
+   bh+=`<div class="row"><div class="rank-num">${r.rank}</div>
+    <div class="who"><div class="addr"><a href="${bscscan(r.wallet)}" target="_blank">${short(r.wallet)}</a> <span class="copy" onclick="copyText('${r.wallet}')">📋</span></div>
+     <div class="bar"><i style="width:${w}%"></i></div></div>
+    <div class="amt"><div class="bnb">${fmtBnb(r.net_bnb)} BNB</div><div class="usd">${fmtUsd(r.net_usd)}</div></div></div>`;
+  });
+  bh+='</div>';$('#board').innerHTML=bh;
+ }else if(!top3.length){
+  const msg=d.status==='waiting'?'活动尚未开始，敬请期待 🚀':'暂无净买入数据';
+  $('#board').innerHTML=`<div class="board"><div class="empty">${msg}</div></div>`;
+ }else{$('#board').innerHTML='';}
+
+ const modeNote = d.mode==='cumulative'
+   ? '统计口径：累计净买入(采集器晚于活动开始启动，按代币开盘至今计)'
+   : '统计口径：仅活动窗口内的净买入(买入−卖出)';
+ $('#foot').innerHTML=`每 ${(d.interval_sec||900)/60} 分钟更新一次 · 净买入=买入−卖出的 BNB(与持币数量无关)<br>
+  ${modeNote}<br>
+  活动时间(北京时间) ${d.start?new Date(d.start*1000).toLocaleString():''} ～ ${d.end?new Date(d.end*1000).toLocaleString():''} &nbsp;·&nbsp; © MAME`;
+}
+
+// 每秒刷新倒计时，每 60 秒重新拉数据
+setInterval(()=>{const el=$('#cd');if(el&&DATA){const now=Date.now()/1000;const t=DATA.status==='waiting'?(DATA.start-now):(DATA.end-now);el.textContent=hms(t)}},1000);
+load();
+setInterval(load,60000);
+</script>
+</body>
+</html>
