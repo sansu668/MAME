@@ -1,17 +1,17 @@
 {
-  "updated_at": 1783126018,
+  "updated_at": 1783126926,
   "start": 1783040400,
   "end": 1783126800,
   "interval_sec": 900,
-  "status": "running",
+  "status": "ended",
   "mode": "window",
   "bnb_price": 560.12003694,
   "token": {
     "symbol": "MAME",
     "name": "Mame Inu",
     "address": "0xe92f7fe3eaf61df28b7b75f3faab199333c42302",
-    "price": 0.0081933374,
-    "market_cap": 8193337.4
+    "price": 0.0081724655,
+    "market_cap": 8172465.5
   },
   "ranking": [
     {
@@ -23,12 +23,20 @@
       "rank": 1
     },
     {
+      "wallet": "0x64F2d9b8ec3f4f8A3280446134AE952df9a6BaAB",
+      "net_bnb": 27.8699,
+      "net_usd": 15610.52,
+      "buy_bnb": 27.8699,
+      "sell_bnb": 0.0,
+      "rank": 2
+    },
+    {
       "wallet": "0x8888F87179B4EF49049d619ECb0b7D49C2798888",
       "net_bnb": 22.374,
       "net_usd": 12532.13,
       "buy_bnb": 22.374,
       "sell_bnb": 0.0,
-      "rank": 2
+      "rank": 3
     },
     {
       "wallet": "0x8678258c13C3f71ca70C1429508e894A8483699A",
@@ -36,7 +44,7 @@
       "net_usd": 11426.45,
       "buy_bnb": 20.4,
       "sell_bnb": 0.0,
-      "rank": 3
+      "rank": 4
     },
     {
       "wallet": "0x425201519314Af682037357a8Ff0418cB6bd66D2",
@@ -44,7 +52,7 @@
       "net_usd": 8967.18,
       "buy_bnb": 16.0094,
       "sell_bnb": 0.0,
-      "rank": 4
+      "rank": 5
     },
     {
       "wallet": "0x79C9a556Bd30fBbEd8dEcd9135930CA6778ae411",
@@ -52,7 +60,7 @@
       "net_usd": 8955.89,
       "buy_bnb": 15.9892,
       "sell_bnb": 0.0,
-      "rank": 5
+      "rank": 6
     },
     {
       "wallet": "0x3e1c67F88148413E79e525036443F3E88b909c16",
@@ -60,7 +68,7 @@
       "net_usd": 2439.03,
       "buy_bnb": 4.3545,
       "sell_bnb": 0.0,
-      "rank": 6
+      "rank": 7
     },
     {
       "wallet": "0xa79B293EdC78B6eaF9c4386203ed8540b45cDb23",
@@ -68,7 +76,7 @@
       "net_usd": 2201.41,
       "buy_bnb": 3.9303,
       "sell_bnb": 0.0,
-      "rank": 7
+      "rank": 8
     },
     {
       "wallet": "0x05615398383D59599E30a8577bf8E23772D0D911",
@@ -76,21 +84,13 @@
       "net_usd": 1393.3,
       "buy_bnb": 2.4875,
       "sell_bnb": 0.0,
-      "rank": 8
+      "rank": 9
     },
     {
       "wallet": "0x67cdF35a31D6930EbDd33b67FF88b7DF507139E7",
       "net_bnb": 2.43,
       "net_usd": 1361.09,
       "buy_bnb": 2.43,
-      "sell_bnb": 0.0,
-      "rank": 9
-    },
-    {
-      "wallet": "0x9367A134026515B7F09577Cd1B3dC81D967D5911",
-      "net_bnb": 2.1285,
-      "net_usd": 1192.21,
-      "buy_bnb": 2.1285,
       "sell_bnb": 0.0,
       "rank": 10
     }
